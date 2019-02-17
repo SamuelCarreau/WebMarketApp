@@ -1,9 +1,0 @@
-C:\GitRepo\WebMarket\WebMarket.Models\bin\Debug\netstandard2.0\WebMarket.Models.deps.json
-C:\GitRepo\WebMarket\WebMarket.Models\bin\Debug\netstandard2.0\WebMarket.Models.dll
-C:\GitRepo\WebMarket\WebMarket.Models\bin\Debug\netstandard2.0\WebMarket.Models.pdb
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.csprojAssemblyReference.cache
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.csproj.CoreCompileInputs.cache
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.AssemblyInfoInputs.cache
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.AssemblyInfo.cs
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.dll
-C:\GitRepo\WebMarket\WebMarket.Models\obj\Debug\netstandard2.0\WebMarket.Models.pdb
