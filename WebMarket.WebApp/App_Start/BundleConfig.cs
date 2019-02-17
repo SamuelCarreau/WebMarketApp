@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WebMarket
+namespace WebMarket.WebApp
 {
     public class BundleConfig
     {

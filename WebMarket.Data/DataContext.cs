@@ -11,6 +11,13 @@ namespace WebMarket.Data
         public DbSet<Entities.Security.UserDB> Users { get; set; }
         public DbSet<Entities.Security.RoleDB> Roles { get; set; }
 
+        public DataContext() : base("MyConnectionDB")
+        {
+            this.Database.CreateIfNotExists();
+        }
+
+       
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserDB>()
