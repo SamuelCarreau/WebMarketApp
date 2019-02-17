@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Unity;
 using WebMarket.Data;
+using WebMarket.Data.Repositories.Security;
 
 namespace WebMarket.Services
 {
@@ -13,8 +14,12 @@ namespace WebMarket.Services
             var container = new UnityContainer();
 
             // Repo
+            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IRoleRepository, RoleRepository>();
+
 
             // Services
+            container.RegisterType<ISecurityService, SecurityService>();
 
             // Misc
             container.RegisterSingleton<DataContext>();

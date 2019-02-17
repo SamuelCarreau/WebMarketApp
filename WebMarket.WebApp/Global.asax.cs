@@ -12,6 +12,7 @@ namespace WebMarket.WebApp
     {
         protected void Application_Start()
         {
+            Services.BootStrap.Initializer();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
