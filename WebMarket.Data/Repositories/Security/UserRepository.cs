@@ -32,9 +32,9 @@ namespace WebMarket.Data.Repositories.Security
 
         public IEnumerable<User> GetUsers(bool? isActive)
         {
-            return (isActive == null) 
-                ? _context.Users.Select(x => (User)x).ToList() 
-                : _context.Users.Where(x => x.IsActive == isActive).Select(x => (User)x).ToList() ;
+            return (isActive == null)
+                ? _context.Users.Select(x => (User)x).ToList()
+                : _context.Users.Where(x => x.IsActive == isActive).Select(x => (User)x).ToList();
         }
         public void Insert(User user)
         {
