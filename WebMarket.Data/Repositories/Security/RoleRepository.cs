@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using WebMarket.Data.Entities.Security;
 using WebMarket.Models.Security;
@@ -9,7 +10,7 @@ namespace WebMarket.Data.Repositories.Security
 {
     public interface IRoleRepository
     {
-        Role GetRoleById(Guid id);
+        Role GetRole(Guid? id = null, string name = null);
         IEnumerable<Role> GetRoles(bool? isActive);
         void Update(Role role);
         void Insert(Role role);
@@ -25,16 +26,25 @@ namespace WebMarket.Data.Repositories.Security
             _context = context;
         }
 
-        public Role GetRoleById(Guid id)
+        public Role GetRole(Guid? id = null, string name = null)
         {
-            return (Role)_context.Roles.FirstOrDefault(x => x.Id == id);
+            Expression<Func<RoleDB, bool>> lamda = null;
+
+            if (id != null && name == null)
+                lamda = x => x.Id == id;
+            else if (id != null && name == null)
+                lamda = x => x.Name == name;
+            else
+                throw new Exception("must have strictly one parameter");
+
+            return (Role)_context.Roles.FirstOrDefault(lamda);
         }
 
         public IEnumerable<Role> GetRoles(bool? isActive)
         {
-                        return (isActive == null)
-                ? _context.Roles.Select(x => (Role)x).ToList()
-                : _context.Roles.Where(x => x.IsActive == isActive).Select(x => (Role)x).ToList();
+            return (isActive == null)
+    ? _context.Roles.Select(x => (Role)x).ToList()
+    : _context.Roles.Where(x => x.IsActive == isActive).Select(x => (Role)x).ToList();
         }
 
         public void Insert(Role role)
@@ -52,7 +62,7 @@ namespace WebMarket.Data.Repositories.Security
             roleDb.Name = role.Name;
             roleDb.IsActive = role.IsActive;
 
-            role.UpdateTime = DateTime.Now;
+            roleDb.UpdateTime = DateTime.Now;
 
             _context.SaveChanges();
         }

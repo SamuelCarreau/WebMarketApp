@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using WebMarket.Data.Entities.Security;
 using WebMarket.Models.Security;
@@ -9,11 +10,12 @@ namespace WebMarket.Data.Repositories.Security
 {
     public interface IUserRepository
     {
-        User GetUserById(Guid id);
+        User GetUser(Guid? id = null, string name = null, string email = null);
         IEnumerable<User> GetUsers(bool? isActive);
         void Update(User user);
         void Insert(User user);
         void Delete(Guid id);
+        void ChangePassword(Guid id, string password);
     }
 
     public class UserRepository : IUserRepository
@@ -25,9 +27,22 @@ namespace WebMarket.Data.Repositories.Security
             _context = context;
         }
 
-        public User GetUserById(Guid id)
+        public User GetUser(Guid? id = null, string UserName = null, string email = null)
         {
-            return (User)_context.Users.FirstOrDefault(x => x.Id == id);
+            Expression<Func<UserDB, bool>> lamda = null;
+
+            if (id != null && UserName == null && email == null)
+                lamda = x => x.Id == id;
+            else if (id == null && UserName != null && email == null)
+                lamda = x => x.UserName == UserName;
+            else if (id == null && UserName == null && email != null)
+                lamda = x => x.Email == email;
+            else if (id == null && UserName == null && email == null)
+                throw new Exception("Expect at least on parameter");
+            else
+                throw new Exception("Two or more parameter, expect only one");
+
+            return (User)_context.Users.FirstOrDefault(lamda);
         }
 
         public IEnumerable<User> GetUsers(bool? isActive)
@@ -50,8 +65,9 @@ namespace WebMarket.Data.Repositories.Security
             userDb.UserName = user.UserName;
             userDb.Email = user.Email;
             userDb.IsActive = user.IsActive;
+            userDb.Roles = user.Roles.Select(x => (RoleDB)x).ToList();
 
-            user.UpdateTime = DateTime.Now;
+            userDb.UpdateTime = DateTime.Now;
 
             _context.SaveChanges();
         }
@@ -63,6 +79,17 @@ namespace WebMarket.Data.Repositories.Security
             _context.Users.Remove(userDb);
             _context.SaveChanges();
 
+        }
+
+        public void ChangePassword(Guid id, string password)
+        {
+            var userDb = _context.Users.First(x => x.Id == id);
+
+            userDb.Password = password;
+
+            userDb.UpdateTime = DateTime.Now;
+
+            _context.SaveChanges();
         }
     }
 }
